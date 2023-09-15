@@ -10,6 +10,8 @@ freq = hslider("freq", 440, 20, 2000, 0.01);
 gate = button("gate");
 gain = hslider("gain", 0, 0, 1, 0.001);
 
+preGain = hslider("preGain", 0, 0, 1, 0.001);
+
 a = hslider("a", 0.001, 0.001, 4, 0.001);
 d = hslider("d", 0.1, 0.001, 4, 0.001);
 s = hslider("s", 0.7, 0, 1, 0.01);
@@ -34,4 +36,4 @@ amp = hslider("amp", 1, 0, 4, 0.001);
 spaceMIDI_LP = ba.midikey2hz( ba.hz2midikey(freqEnv(freq)) + spaceLP );
 spaceMIDI_HP = ba.midikey2hz( ba.hz2midikey(freqEnv(freq)) + spaceHP );
 
-process = no.noise * 0.2 : *(en.adsre(a,d,s,r,gate)): fi.resonhp(spaceMIDI_HP,q,amp) : fi.resonlp(spaceMIDI_LP,q,amp) * (gain);
+process = _ *(preGain) : *(en.adsre(a,d,s,r,gate)): fi.resonhp(spaceMIDI_HP,q,amp) : fi.resonlp(spaceMIDI_LP,q,amp) * (gain);
